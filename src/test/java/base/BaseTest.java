@@ -93,13 +93,6 @@ public class BaseTest {
     }
 
     private void login() {
-        final String baseUrl = properties.getProperty("url").toLowerCase().trim();
-        final String username = properties.getProperty("username").trim();
-        final String password = properties.getProperty("password").trim();
 
-        page.navigate(baseUrl);
-        page.locator("//span[text()='Email']/../div/input").fill(username);
-        page.locator("//input[@type='password']").fill(password);
-        page.locator("//button[@type='submit']").click();
     }
 }
