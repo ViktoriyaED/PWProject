@@ -4,9 +4,8 @@ import com.microsoft.playwright.*;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.nio.file.Paths;
 import java.util.Properties;
@@ -82,14 +81,25 @@ public class BaseTest {
 
     public void init_properties() {
         try {
-            FileInputStream ip = new FileInputStream("./src/test/resources/config.properties");
-            properties = new Properties();
-            properties.load(ip);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            InputStream inputStream = BaseTest.class.getClassLoader().getResourceAsStream("config.properties");
+            if (inputStream == null) {
+                System.out.println("ERROR: The \u001B[31mlocal.properties\u001B[0m file not found in src/test/resources/ directory.");
+                System.out.println("You need to create it from local.properties.TEMPLATE file.");
+                System.exit(1);
+            }
+            properties.load(inputStream);
+        } catch (IOException ignore) {
         }
+
+//        try {
+//            FileInputStream ip = new FileInputStream("./src/test/resources/config.properties");
+//            properties = new Properties();
+//            properties.load(ip);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     private void login() {
