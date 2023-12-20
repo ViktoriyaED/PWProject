@@ -80,16 +80,18 @@ public class BaseTest {
     }
 
     public void init_properties() {
-        try {
-            InputStream inputStream = BaseTest.class.getClassLoader().getResourceAsStream("config.properties");
-            if (inputStream == null) {
-                System.out.println("ERROR: The \u001B[31mlocal.properties\u001B[0m file not found in src/test/resources/ directory.");
-                System.out.println("You need to create it from local.properties.TEMPLATE file.");
-                System.exit(1);
+        if (properties == null) {
+            properties = new Properties();
+            try {
+                InputStream inputStream = BaseTest.class.getClassLoader().getResourceAsStream("config.properties");
+                if (inputStream == null) {
+                    System.out.println("ERROR: The \u001B[31mlocal.properties\u001B[0m file not found in src/test/resources/ directory.");
+                    System.out.println("You need to create it from local.properties.TEMPLATE file.");
+                    System.exit(1);
+                }
+                properties.load(inputStream);
+            } catch (IOException ignore) {
             }
-            properties.load(inputStream);
-        } catch (IOException ignore) {
-        }
 
 //        try {
 //            FileInputStream ip = new FileInputStream("./src/test/resources/config.properties");
@@ -100,16 +102,17 @@ public class BaseTest {
 //        } catch (IOException e) {
 //            throw new RuntimeException(e);
 //        }
+        }
     }
 
-    private void login() {
-        final String baseUrl = properties.getProperty("url").toLowerCase().trim();
-        final String username = properties.getProperty("username").trim();
-        final String password = properties.getProperty("password").trim();
+        private void login () {
+            final String baseUrl = properties.getProperty("url").toLowerCase().trim();
+            final String username = properties.getProperty("username").trim();
+            final String password = properties.getProperty("password").trim();
 
-        page.navigate(baseUrl);
-        page.locator("//span[text()='Email']/../div/input").fill(username);
-        page.locator("//input[@type='password']").fill(password);
-        page.locator("//button[@type='submit']").click();
+            page.navigate(baseUrl);
+            page.locator("//span[text()='Email']/../div/input").fill(username);
+            page.locator("//input[@type='password']").fill(password);
+            page.locator("//button[@type='submit']").click();
+        }
     }
-}
