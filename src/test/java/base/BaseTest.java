@@ -79,7 +79,7 @@ public class BaseTest {
 
     public void init_properties() {
         try {
-            FileInputStream ip = new FileInputStream("./src/config.properties");
+            FileInputStream ip = new FileInputStream("./src/test/resources/config.properties");
             properties = new Properties();
             properties.load(ip);
         } catch (FileNotFoundException e) {
