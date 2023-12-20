@@ -42,7 +42,10 @@ public class BaseTest {
 
     @BeforeMethod
     protected void createContextAndPage() {
-        context = browser.newContext();
+        int width = Integer.parseInt(properties.getProperty("width"));
+        int height = Integer.parseInt(properties.getProperty("height"));
+
+        context = browser.newContext(new Browser.NewContextOptions().setViewportSize(width, height));
 
         context.tracing().start(
                 new Tracing.StartOptions()
