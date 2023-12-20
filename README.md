@@ -5,9 +5,12 @@
 In order to use the framework:
 
 - Fork the repository.
-- Clone, i.e, download your copy of the repository to your local machine using
-
+- Clone, i.e, download your copy of the repository to your local machine 
 - Import the project in IntelliJ IDEA.
+
+- Create a copy of the file 'config.properties.TEMPLATE' located in the 'src/test/resources' folder.
+- Place this copy in the same location, removing the '.TEMPLATE' from its name.
+- In the newly created file 'config.properties', specify the username and password.
 
 ## Languages and Frameworks
 
