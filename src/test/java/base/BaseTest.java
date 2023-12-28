@@ -23,11 +23,14 @@ public class BaseTest {
 
     private static final String ENV_BROWSER_OPTIONS = "BROWSER_OPTIONS";
 
+    static {
+        init_properties();
+    }
 
     @BeforeClass
     protected void launchBrowser() {
 
-        Properties properties = init_properties();
+//        init_properties();
 
         final String browserName = properties.getProperty("browser").trim();
         final boolean isHeadless = Boolean.parseBoolean(properties.getProperty("headless").trim());
@@ -88,7 +91,7 @@ public class BaseTest {
         playwright.close();
     }
 
-    private static Properties init_properties() {
+    private static void init_properties() {
         if (properties == null) {
             properties = new Properties();
             if (isServerRun()) {
@@ -127,17 +130,20 @@ public class BaseTest {
             }
         }
 //        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + properties);
-        return properties;
     }
 
     static boolean isServerRun() {
         return System.getenv("CI_RUN") != null;
     }
 
+    static Properties getProperties() {
+        return properties;
+    }
+
     private void login() {
-        final String baseUrl = properties.getProperty("url");
-        final String username = properties.getProperty("username");
-        final String password = properties.getProperty("password");
+        final String baseUrl = getProperties().getProperty("url");
+        final String username = getProperties().getProperty("username");
+        final String password = getProperties().getProperty("password");
 
         page.navigate(baseUrl);
         page.locator("//span[text()='Email']/../div/input").fill(username);
