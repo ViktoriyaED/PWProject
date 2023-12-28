@@ -129,7 +129,9 @@ public class BaseTest {
                     }
                 }
                 System.out.println(properties);
-                System.out.println("!!!!!!!!!!!!!!get password" +System.getenv("PASSWORD"));
+                System.out.println("!!!!!!!!!!!!!!get password = " +System.getenv("PASSWORD"));
+                System.out.println("!!!!!!!!!!!!!!get username = " + System.getenv("USERNAME"));
+                System.out.println("!!!!!!!!!!!!!!get url = " + System.getenv("BASE_URL"));
 
             } else {
                 try {
