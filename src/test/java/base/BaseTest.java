@@ -23,16 +23,16 @@ public class BaseTest {
 
     private static final String ENV_BROWSER_OPTIONS = "BROWSER_OPTIONS";
 
-    static {
-        System.out.println("Static block is executed");
-        init_properties();
-    }
+//    static {
+//        System.out.println("Static block is executed");
+//        init_properties();
+//    }
 
 
     @BeforeClass
     protected void launchBrowser() {
 
-//        init_properties();
+        init_properties();
 
         final String browserName = properties.getProperty("browser").trim();
         final boolean isHeadless = Boolean.parseBoolean(properties.getProperty("headless").trim());
@@ -102,9 +102,6 @@ public class BaseTest {
                     for (String option : System.getenv(ENV_BROWSER_OPTIONS).split(";")) {
                         String[] browserOptionArr = option.split("=");
                         properties.setProperty(browserOptionArr[0], browserOptionArr[1]);
-                        System.out.println("***************************browser_options*******************************************");
-                        System.out.println(Arrays.toString(browserOptionArr));
-//                        System.out.println(properties);
                     }
                 }
 
@@ -112,9 +109,6 @@ public class BaseTest {
                     for (String option : System.getenv(ENV_WEB_OPTIONS).split(";")) {
                         String[] webOptionArr = option.split("=");
                         properties.setProperty(webOptionArr[0], webOptionArr[1]);
-                        System.out.println("***************************WEB_options*******************************************");
-                        System.out.println(Arrays.toString(webOptionArr));
-//                        System.out.println(properties);
                     }
                 }
 
@@ -131,21 +125,20 @@ public class BaseTest {
                 }
             }
         }
-//        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + properties);
     }
 
     static boolean isServerRun() {
         return System.getenv("CI_RUN") != null;
     }
 
-    static Properties getProperties() {
-        return properties;
-    }
+//    static Properties getProperties() {
+//        return properties;
+//    }
 
     private void login() {
-        final String baseUrl = getProperties().getProperty("base_url");
-        final String username = getProperties().getProperty("username");
-        final String password = getProperties().getProperty("password");
+        final String baseUrl = properties.getProperty("base_url");
+        final String username = properties.getProperty("username");
+        final String password = properties.getProperty("password");
 
         page.navigate(baseUrl);
         page.locator("//span[text()='Email']/../div/input").fill(username);
