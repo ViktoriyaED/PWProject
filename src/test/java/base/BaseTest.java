@@ -129,6 +129,7 @@ public class BaseTest {
                     }
                 }
                 System.out.println(properties);
+                System.out.println("!!!!!!!!!!!!!!get password" +System.getenv("PASSWORD"));
 
             } else {
                 try {
@@ -150,9 +151,8 @@ public class BaseTest {
     }
 
     private void login() {
-        final String baseUrl = properties.getProperty("url").toString();
+        final String baseUrl = properties.getProperty("url");
         final String username = properties.getProperty("username");
-//        final String password = properties.getProperty("password");
         final String password = properties.getProperty("password");
 
         page.navigate(baseUrl);

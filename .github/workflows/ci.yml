@@ -25,6 +25,17 @@ jobs:
       - name: Install Playwright
         run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
 
+      - name: Set up secret files
+        env:
+          BROWSER_OPTIONS: browser=chrome;width=1920;height=1080;headless=true;slowMo=0
+          WEB_OPTIONS: username=${{ secrets.USERNAME }};password=${{ secrets.PASSWORD }};base_url=${{ secrets.BASE_URL}}
+          CI_RUN: true
+        run: |
+          echo "The GitHub Action Secret will be masked:  "
+          echo ${{ secrets.SECRET_USERNAME }}
+          echo "Trick to echo GitHub Actions Secret:  "
+          echo ${{secrets.SECRET_USERNAME}} | sed 's/./& /g'
+
       - name: Run tests
         run: mvn test
         env:
