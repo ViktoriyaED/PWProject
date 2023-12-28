@@ -4,11 +4,8 @@ import com.microsoft.playwright.*;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -91,18 +88,6 @@ public class BaseTest {
         playwright.close();
     }
 
-//    public void init_properties() {
-//        try {
-//            FileInputStream ip = new FileInputStream("./src/test/resources/config.properties");
-//            properties = new Properties();
-//            properties.load(ip);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-
     private static void init_properties() {
         if (properties == null) {
             properties = new Properties();
@@ -128,10 +113,6 @@ public class BaseTest {
 //                        System.out.println(properties);
                     }
                 }
-                System.out.println(properties);
-                System.out.println("!!!!!!!!!!!!!!get password = " +System.getenv("PASSWORD"));
-                System.out.println("!!!!!!!!!!!!!!get username = " + System.getenv("USERNAME"));
-                System.out.println("!!!!!!!!!!!!!!get url = " + System.getenv("BASE_URL"));
 
             } else {
                 try {
@@ -146,6 +127,7 @@ public class BaseTest {
                 }
             }
         }
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + properties);
     }
 
     static boolean isServerRun() {
