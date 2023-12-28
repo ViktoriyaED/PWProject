@@ -8,8 +8,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Properties;
 
 
@@ -103,12 +105,14 @@ public class BaseTest {
         if (properties == null) {
             properties = new Properties();
             if (isServerRun()) {
-//                properties.setProperty(PROP_CHROME_OPTIONS, System.getenv(ENV_CHROME_OPTIONS));
+                System.out.println("***************************Ci runs*******************************************");
 
                 if (System.getenv(ENV_BROWSER_OPTIONS) != null) {
                     for (String option : System.getenv(ENV_BROWSER_OPTIONS).split(";")) {
                         String[] browserOptionArr = option.split("=");
                         properties.setProperty(browserOptionArr[0], browserOptionArr[1]);
+                        System.out.println("***************************browser_options*******************************************");
+                        System.out.println(Arrays.toString(browserOptionArr));
                     }
                 }
 
@@ -116,6 +120,8 @@ public class BaseTest {
                     for (String option : System.getenv(ENV_WEB_OPTIONS).split(";")) {
                         String[] webOptionArr = option.split("=");
                         properties.setProperty(webOptionArr[0], webOptionArr[1]);
+                        System.out.println("***************************WEB_options*******************************************");
+                        System.out.println(Arrays.toString(webOptionArr));
                     }
                 }
 
