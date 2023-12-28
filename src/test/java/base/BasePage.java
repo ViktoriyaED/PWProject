@@ -2,14 +2,14 @@ package base;
 
 import com.microsoft.playwright.Page;
 
-import java.util.Properties;
-
 public abstract class BasePage {
-    protected Page page;
-    protected Properties properties;
+    private Page page;
 
     public BasePage(Page page) {
         this.page = page;
     }
 
+    protected Page getPage() {
+        return page;
+    }
 }
