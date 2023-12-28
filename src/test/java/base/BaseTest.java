@@ -149,7 +149,7 @@ public class BaseTest {
     }
 
     private void login() {
-        final String baseUrl = properties.getProperty("url").toLowerCase().trim();
+        final String baseUrl = properties.getProperty("url").trim();
         final String username = properties.getProperty("username").trim();
         final String password = properties.getProperty("password").trim();
 
