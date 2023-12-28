@@ -27,7 +27,7 @@ public class BaseTest {
     @BeforeClass
     protected void launchBrowser() {
 
-        init_properties();
+        Properties properties = init_properties();
 
         final String browserName = properties.getProperty("browser").trim();
         final boolean isHeadless = Boolean.parseBoolean(properties.getProperty("headless").trim());
@@ -88,11 +88,10 @@ public class BaseTest {
         playwright.close();
     }
 
-    private static void init_properties() {
+    private static Properties init_properties() {
         if (properties == null) {
             properties = new Properties();
             if (isServerRun()) {
-                System.out.println("***************************Ci runs*******************************************");
 
                 if (System.getenv(ENV_BROWSER_OPTIONS) != null) {
                     for (String option : System.getenv(ENV_BROWSER_OPTIONS).split(";")) {
@@ -127,7 +126,8 @@ public class BaseTest {
                 }
             }
         }
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + properties);
+//        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + properties);
+        return properties;
     }
 
     static boolean isServerRun() {
