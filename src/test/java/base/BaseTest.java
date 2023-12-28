@@ -17,15 +17,17 @@ public class BaseTest {
     private Browser browser;
     private BrowserContext context;
     protected Page page;
-    protected static Properties properties;
+    private static Properties properties;
 
     private static final String ENV_WEB_OPTIONS = "WEB_OPTIONS";
 
     private static final String ENV_BROWSER_OPTIONS = "BROWSER_OPTIONS";
 
     static {
+        System.out.println("Static block is executed");
         init_properties();
     }
+
 
     @BeforeClass
     protected void launchBrowser() {
@@ -141,7 +143,7 @@ public class BaseTest {
     }
 
     private void login() {
-        final String baseUrl = getProperties().getProperty("url");
+        final String baseUrl = getProperties().getProperty("base_url");
         final String username = getProperties().getProperty("username");
         final String password = getProperties().getProperty("password");
 
