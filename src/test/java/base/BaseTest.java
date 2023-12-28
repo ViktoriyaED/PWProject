@@ -149,9 +149,9 @@ public class BaseTest {
     }
 
     private void login() {
-        final String baseUrl = properties.getProperty("url").trim();
-        final String username = properties.getProperty("username").trim();
-        final String password = properties.getProperty("password").trim();
+        final String baseUrl = properties.getProperty("url");
+        final String username = properties.getProperty("username");
+        final String password = properties.getProperty("password");
 
         page.navigate(baseUrl);
         page.locator("//span[text()='Email']/../div/input").fill(username);
