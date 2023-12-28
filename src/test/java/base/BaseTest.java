@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Properties;
 
 
@@ -18,16 +17,8 @@ public class BaseTest {
     private BrowserContext context;
     protected Page page;
     private static Properties properties;
-
     private static final String ENV_WEB_OPTIONS = "WEB_OPTIONS";
-
     private static final String ENV_BROWSER_OPTIONS = "BROWSER_OPTIONS";
-
-//    static {
-//        System.out.println("Static block is executed");
-//        init_properties();
-//    }
-
 
     @BeforeClass
     protected void launchBrowser() {
@@ -130,10 +121,6 @@ public class BaseTest {
     static boolean isServerRun() {
         return System.getenv("CI_RUN") != null;
     }
-
-//    static Properties getProperties() {
-//        return properties;
-//    }
 
     private void login() {
         final String baseUrl = properties.getProperty("base_url");

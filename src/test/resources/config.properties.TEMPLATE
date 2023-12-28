@@ -1,7 +1,8 @@
-browser = chrome
-url = System.getenv("BASE_URL")
-username = System.getenv("USERNAME")
-password = System.getenv("PASSWORD")
-headless = false
-width = 1920
-height = 1080
+browser=chrome
+base_url=
+username=
+password=
+headless=false
+slowMo=1500
+width=1920
+height=1080
