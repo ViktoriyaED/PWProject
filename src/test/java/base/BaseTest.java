@@ -115,7 +115,7 @@ public class BaseTest {
                         properties.setProperty(browserOptionArr[0], browserOptionArr[1]);
                         System.out.println("***************************browser_options*******************************************");
                         System.out.println(Arrays.toString(browserOptionArr));
-                        System.out.println(properties);
+//                        System.out.println(properties);
                     }
                 }
 
@@ -125,9 +125,10 @@ public class BaseTest {
                         properties.setProperty(webOptionArr[0], webOptionArr[1]);
                         System.out.println("***************************WEB_options*******************************************");
                         System.out.println(Arrays.toString(webOptionArr));
-                        System.out.println(properties);
+//                        System.out.println(properties);
                     }
                 }
+                System.out.println(properties);
 
             } else {
                 try {
@@ -149,8 +150,9 @@ public class BaseTest {
     }
 
     private void login() {
-        final String baseUrl = properties.getProperty("url");
+        final String baseUrl = properties.getProperty("url").toString();
         final String username = properties.getProperty("username");
+//        final String password = properties.getProperty("password");
         final String password = properties.getProperty("password");
 
         page.navigate(baseUrl);
