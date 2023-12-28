@@ -30,44 +30,7 @@ public class BaseTest {
     @BeforeClass
     protected void launchBrowser() {
 
-        if (properties == null) {
-            properties = new Properties();
-            if (isServerRun()) {
-                System.out.println("***************************Ci runs*******************************************");
-
-                if (System.getenv(ENV_BROWSER_OPTIONS) != null) {
-                    for (String option : System.getenv(ENV_BROWSER_OPTIONS).split(";")) {
-                        String[] browserOptionArr = option.split("=");
-                        properties.setProperty(browserOptionArr[0], browserOptionArr[1]);
-                        System.out.println("***************************browser_options*******************************************");
-                        System.out.println(Arrays.toString(browserOptionArr));
-                    }
-                }
-
-                if (System.getenv(ENV_WEB_OPTIONS) != null) {
-                    for (String option : System.getenv(ENV_WEB_OPTIONS).split(";")) {
-                        String[] webOptionArr = option.split("=");
-                        properties.setProperty(webOptionArr[0], webOptionArr[1]);
-                        System.out.println("***************************WEB_options*******************************************");
-                        System.out.println(Arrays.toString(webOptionArr));
-                    }
-                }
-
-            } else {
-                try {
-                    InputStream inputStream = BaseTest.class.getClassLoader().getResourceAsStream("config.properties");
-                    if (inputStream == null) {
-                        System.out.println("ERROR: The \u001B[31mconfig.properties\u001B[0m file not found.");
-                        System.out.println("You need to create it from config.properties.TEMPLATE file.");
-                        System.exit(1);
-                    }
-                    properties.load(inputStream);
-                } catch (IOException ignore) {
-                }
-            }
-        }
-
-//        init_properties();
+        init_properties();
 
         final String browserName = properties.getProperty("browser").trim();
         final boolean isHeadless = Boolean.parseBoolean(properties.getProperty("headless").trim());
@@ -140,44 +103,46 @@ public class BaseTest {
 //        }
 //    }
 
-//    private static void init_properties() {
-//        if (properties == null) {
-//            properties = new Properties();
-//            if (isServerRun()) {
-//                System.out.println("***************************Ci runs*******************************************");
-//
-//                if (System.getenv(ENV_BROWSER_OPTIONS) != null) {
-//                    for (String option : System.getenv(ENV_BROWSER_OPTIONS).split(";")) {
-//                        String[] browserOptionArr = option.split("=");
-//                        properties.setProperty(browserOptionArr[0], browserOptionArr[1]);
-//                        System.out.println("***************************browser_options*******************************************");
-//                        System.out.println(Arrays.toString(browserOptionArr));
-//                    }
-//                }
-//
-//                if (System.getenv(ENV_WEB_OPTIONS) != null) {
-//                    for (String option : System.getenv(ENV_WEB_OPTIONS).split(";")) {
-//                        String[] webOptionArr = option.split("=");
-//                        properties.setProperty(webOptionArr[0], webOptionArr[1]);
-//                        System.out.println("***************************WEB_options*******************************************");
-//                        System.out.println(Arrays.toString(webOptionArr));
-//                    }
-//                }
-//
-//            } else {
-//                try {
-//                    InputStream inputStream = BaseTest.class.getClassLoader().getResourceAsStream("config.properties");
-//                    if (inputStream == null) {
-//                        System.out.println("ERROR: The \u001B[31mconfig.properties\u001B[0m file not found.");
-//                        System.out.println("You need to create it from config.properties.TEMPLATE file.");
-//                        System.exit(1);
-//                    }
-//                    properties.load(inputStream);
-//                } catch (IOException ignore) {
-//                }
-//            }
-//        }
-//    }
+    private static void init_properties() {
+        if (properties == null) {
+            properties = new Properties();
+            if (isServerRun()) {
+                System.out.println("***************************Ci runs*******************************************");
+
+                if (System.getenv(ENV_BROWSER_OPTIONS) != null) {
+                    for (String option : System.getenv(ENV_BROWSER_OPTIONS).split(";")) {
+                        String[] browserOptionArr = option.split("=");
+                        properties.setProperty(browserOptionArr[0], browserOptionArr[1]);
+                        System.out.println("***************************browser_options*******************************************");
+                        System.out.println(Arrays.toString(browserOptionArr));
+                        System.out.println(properties);
+                    }
+                }
+
+                if (System.getenv(ENV_WEB_OPTIONS) != null) {
+                    for (String option : System.getenv(ENV_WEB_OPTIONS).split(";")) {
+                        String[] webOptionArr = option.split("=");
+                        properties.setProperty(webOptionArr[0], webOptionArr[1]);
+                        System.out.println("***************************WEB_options*******************************************");
+                        System.out.println(Arrays.toString(webOptionArr));
+                        System.out.println(properties);
+                    }
+                }
+
+            } else {
+                try {
+                    InputStream inputStream = BaseTest.class.getClassLoader().getResourceAsStream("config.properties");
+                    if (inputStream == null) {
+                        System.out.println("ERROR: The \u001B[31mconfig.properties\u001B[0m file not found.");
+                        System.out.println("You need to create it from config.properties.TEMPLATE file.");
+                        System.exit(1);
+                    }
+                    properties.load(inputStream);
+                } catch (IOException ignore) {
+                }
+            }
+        }
+    }
 
     static boolean isServerRun() {
         return System.getenv("CI_RUN") != null;
