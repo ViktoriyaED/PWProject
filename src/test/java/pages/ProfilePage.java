@@ -1,11 +1,11 @@
 package pages;
 
-import base.BasePage;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
 
-public class ProfilePage extends BasePage {
+class ProfilePage extends BaseLocator {
 
-    public ProfilePage(Page page) {
-        super(page);
+    public ProfilePage(Page page, Playwright playwright) {
+        super(page, playwright);
     }
 }
