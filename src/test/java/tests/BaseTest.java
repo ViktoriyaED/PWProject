@@ -1,4 +1,4 @@
-package base;
+package tests;
 
 import com.microsoft.playwright.*;
 import org.testng.ITestResult;
@@ -11,25 +11,27 @@ import java.nio.file.Paths;
 import java.util.Properties;
 
 
-public class BaseTest {
-    private Playwright playwright;
+abstract class BaseTest {
+    private final Playwright playwright = Playwright.create();
     private Browser browser;
     private BrowserContext context;
-    protected Page page;
+    private Page page;
     private static Properties properties;
     private static final String ENV_WEB_OPTIONS = "WEB_OPTIONS";
     private static final String ENV_BROWSER_OPTIONS = "BROWSER_OPTIONS";
+    private int width;
+    private int height;
+    private String baseURL;
 
-    @BeforeClass
+
+    @BeforeSuite
     protected void launchBrowser() {
-
         init_properties();
 
         final String browserName = properties.getProperty("browser").trim();
         final boolean isHeadless = Boolean.parseBoolean(properties.getProperty("headless").trim());
         final double isSlow = Double.parseDouble(properties.getProperty("slowMo").trim());
 
-        playwright = Playwright.create();
 
         switch (browserName) {
             case "chromium" -> browser = playwright.chromium().launch(
@@ -42,24 +44,24 @@ public class BaseTest {
                     new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(isHeadless).setSlowMo(isSlow));
             default -> System.out.println("Please enter the right browser name...");
         }
+
+        width = Integer.parseInt(properties.getProperty("width"));
+        height = Integer.parseInt(properties.getProperty("height"));
+        baseURL = properties.getProperty("base_url");
     }
 
     @BeforeMethod
     protected void createContextAndPage() {
-        int width = Integer.parseInt(properties.getProperty("width"));
-        int height = Integer.parseInt(properties.getProperty("height"));
-
         context = browser.newContext(new Browser.NewContextOptions().setViewportSize(width, height));
-
         context.tracing().start(
                 new Tracing.StartOptions()
-
                         .setScreenshots(true)
                         .setSnapshots(true)
                         .setSources(true)
         );
-
         page = context.newPage();
+
+        page.navigate(baseURL);
         login();
     }
 
@@ -75,10 +77,11 @@ public class BaseTest {
                 tracingStopOptions
         );
 
+        page.close();
         context.close();
     }
 
-    @AfterClass
+    @AfterSuite
     protected void closeBrowser() {
         browser.close();
         playwright.close();
@@ -123,13 +126,20 @@ public class BaseTest {
     }
 
     private void login() {
-        final String baseUrl = properties.getProperty("base_url");
-        final String username = properties.getProperty("username");
-        final String password = properties.getProperty("password");
-
-        page.navigate(baseUrl);
-        page.locator("//span[text()='Email']/../div/input").fill(username);
-        page.locator("//input[@type='password']").fill(password);
+        page.locator("//span[text()='Email']/../div/input").fill(properties.getProperty("username"));
+        page.locator("//input[@type='password']").fill(properties.getProperty("password"));
         page.locator("//button[@type='submit']").click();
+    }
+
+    public Page getPage() {
+        return page;
+    }
+
+    public Playwright getPlaywright() {
+        return playwright;
+    }
+
+    public String getBaseUrl() {
+        return baseURL;
     }
 }
