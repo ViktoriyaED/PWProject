@@ -24,7 +24,7 @@ abstract class BaseTest {
     private String baseURL;
 
 
-    @BeforeSuite
+    @BeforeTest
     protected void launchBrowser() {
         init_properties();
 
@@ -81,7 +81,7 @@ abstract class BaseTest {
         context.close();
     }
 
-    @AfterSuite
+    @AfterTest
     protected void closeBrowser() {
         browser.close();
         playwright.close();
