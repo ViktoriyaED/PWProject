@@ -52,7 +52,7 @@ public class HomeTest extends BaseTest {
         testsPage.chaptersButton.click();
         testsPage.domainsButton.click();
         testsPage.checkboxLocator("Body composition").click();
-        testsPage.checkboxLocator("Dehydration").click();
+        testsPage.checkboxLocator("Exercise Metabolism").click();
         testsPage.selectAllButton.click();
         testsPage.timedButton.click();
         testsPage.tutorButton.click();
