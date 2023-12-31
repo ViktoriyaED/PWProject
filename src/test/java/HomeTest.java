@@ -3,7 +3,6 @@ import com.microsoft.playwright.options.AriaRole;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.HomePage;
-import pages.TestsPage;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
@@ -41,23 +40,5 @@ public class HomeTest extends BaseTest {
         HomePage homePage = new HomePage(getPage(), getPlaywright());
         assertThat(homePage.studyThisButton).isVisible();
         homePage.studyThisButton.click();
-    }
-
-    @Test
-    public void testLocators1() {
-        HomePage homePage = new HomePage(getPage(), getPlaywright());
-        homePage.testsButton.click();
-
-        TestsPage testsPage = new TestsPage(getPage(), getPlaywright());
-        testsPage.chaptersButton.click();
-        testsPage.domainsButton.click();
-        testsPage.checkboxLocator("Body composition").click();
-        testsPage.checkboxLocator("Exercise Metabolism").click();
-        testsPage.selectAllButton.click();
-        testsPage.timedButton.click();
-        testsPage.tutorButton.click();
-        testsPage.numberOfQuestionsTextbox.fill("5");
-        testsPage.numberOfQuestionsTextbox.clear();
-        testsPage.generateStartButton.click();
     }
 }

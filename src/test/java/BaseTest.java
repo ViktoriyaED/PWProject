@@ -14,15 +14,13 @@ abstract class BaseTest {
     private Browser browser;
     private BrowserContext context;
     private Page page;
-    private static Properties properties;
-    private static final String ENV_WEB_OPTIONS = "WEB_OPTIONS";
-    private static final String ENV_BROWSER_OPTIONS = "BROWSER_OPTIONS";
+    private Properties properties;
     private int width;
     private int height;
     private String baseURL;
 
 
-    @BeforeSuite
+    @BeforeClass
     protected void launchBrowser() {
         init_properties();
 
@@ -79,17 +77,18 @@ abstract class BaseTest {
         context.close();
     }
 
-    @AfterSuite
+    @AfterClass
     protected void closeBrowser() {
         browser.close();
         playwright.close();
     }
 
-    private static void init_properties() {
+    private void init_properties() {
         if (properties == null) {
             properties = new Properties();
             if (isServerRun()) {
 
+                String ENV_BROWSER_OPTIONS = "BROWSER_OPTIONS";
                 if (System.getenv(ENV_BROWSER_OPTIONS) != null) {
                     for (String option : System.getenv(ENV_BROWSER_OPTIONS).split(";")) {
                         String[] browserOptionArr = option.split("=");
@@ -97,6 +96,7 @@ abstract class BaseTest {
                     }
                 }
 
+                String ENV_WEB_OPTIONS = "WEB_OPTIONS";
                 if (System.getenv(ENV_WEB_OPTIONS) != null) {
                     for (String option : System.getenv(ENV_WEB_OPTIONS).split(";")) {
                         String[] webOptionArr = option.split("=");
