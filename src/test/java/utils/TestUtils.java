@@ -10,7 +10,6 @@ public class TestUtils {
         if (list.count() == 0) {
             return 0;
         }
-        System.out.println("List size = " + list.count());
         return new Random().nextInt(1, list.count());
     }
 
