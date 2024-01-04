@@ -56,10 +56,6 @@ abstract class BaseLocator extends BasePage {
         return getPage().getByRole(AriaRole.IMG, new Page.GetByRoleOptions().setName(text));
     }
 
-    protected void clickButton(String text) {
-        button(text).click();
-    }
-
     public Locator generateListOfElements(String string) {
         Locator list = getPage().locator(string);
         list.last().waitFor();
