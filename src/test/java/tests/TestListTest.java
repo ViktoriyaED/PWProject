@@ -1,6 +1,9 @@
+package tests;
+
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.TestsPage;
+import utils.ProjectProperties;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
@@ -22,7 +25,7 @@ public class TestListTest extends BaseTest {
 
         waitForPageLoad(testTutorEndPoint);
         assertThat(testsPage.headerQuestionsCount).hasText("/" + expectedNumberOfQuestions);
-        assertThat(getPage()).hasURL(getBaseUrl() + testTutorEndPoint);
+        assertThat(getPage()).hasURL(ProjectProperties.BASE_URL + testTutorEndPoint);
     }
 
     @Test
@@ -41,6 +44,6 @@ public class TestListTest extends BaseTest {
 
         waitForPageLoad(testTutorEndPoint);
         assertThat(testsPage.headerQuestionsCount).hasText("/" + expectedNumberOfQuestions);
-        assertThat(getPage()).hasURL(getBaseUrl() + testTutorEndPoint);
+        assertThat(getPage()).hasURL(ProjectProperties.BASE_URL + testTutorEndPoint);
     }
 }
