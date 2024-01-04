@@ -6,13 +6,7 @@ import com.microsoft.playwright.Playwright;
 
 public class TestsPage extends BaseLocator {
 
-    public Locator domainsButton = text("Domains");
-    public Locator chaptersButton = text("Chapters");
-    public Locator selectAllButton = button("Select all");
-    public Locator tutorButton = button("Tutor");
-    public Locator timedButton = button("Timed");
-    public Locator numberOfQuestionsTextbox = textbox("numberOfQuestions");
-    public Locator generateStartButton = button("Generate & Start");
+    public Locator headerQuestionsCount = getPage().locator("//header/div/div/span[2]");
 
     public TestsPage(Page page, Playwright playwright) {
         super(page, playwright);

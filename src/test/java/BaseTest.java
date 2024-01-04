@@ -14,10 +14,12 @@ abstract class BaseTest {
     private Browser browser;
     private BrowserContext context;
     private Page page;
-    private Properties properties;
+    private static Properties properties;
+    private static final String ENV_BROWSER_OPTIONS = "BROWSER_OPTIONS";
+    private static final String ENV_WEB_OPTIONS = "WEB_OPTIONS";
     private int width;
     private int height;
-    private String baseURL;
+    public String baseURL;
 
 
     @BeforeClass
@@ -27,7 +29,6 @@ abstract class BaseTest {
         final String browserName = properties.getProperty("browser").trim();
         final boolean isHeadless = Boolean.parseBoolean(properties.getProperty("headless").trim());
         final double isSlow = Double.parseDouble(properties.getProperty("slowMo").trim());
-
 
         switch (browserName) {
             case "chromium" -> this.browser = playwright.chromium().launch(
@@ -83,12 +84,11 @@ abstract class BaseTest {
         playwright.close();
     }
 
-    private void init_properties() {
+    private static void init_properties() {
         if (properties == null) {
             properties = new Properties();
             if (isServerRun()) {
 
-                String ENV_BROWSER_OPTIONS = "BROWSER_OPTIONS";
                 if (System.getenv(ENV_BROWSER_OPTIONS) != null) {
                     for (String option : System.getenv(ENV_BROWSER_OPTIONS).split(";")) {
                         String[] browserOptionArr = option.split("=");
@@ -96,7 +96,6 @@ abstract class BaseTest {
                     }
                 }
 
-                String ENV_WEB_OPTIONS = "WEB_OPTIONS";
                 if (System.getenv(ENV_WEB_OPTIONS) != null) {
                     for (String option : System.getenv(ENV_WEB_OPTIONS).split(";")) {
                         String[] webOptionArr = option.split("=");
@@ -139,5 +138,9 @@ abstract class BaseTest {
 
     public String getBaseUrl() {
         return baseURL;
+    }
+
+    public void waitForPageLoad(String endPoint) {
+        getPage().waitForURL(getBaseUrl() + endPoint);
     }
 }
