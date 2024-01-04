@@ -5,6 +5,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.AriaRole;
+import utils.TestUtils;
 
 public class TestListPage extends BaseLocator {
 
@@ -58,7 +59,7 @@ public class TestListPage extends BaseLocator {
     }
 
     public TestListPage clickRandomCheckbox() {
-        BasePage.clickRandomElement(listCheckboxes);
+        TestUtils.clickRandomElement(listCheckboxes);
         return this;
     }
 }
