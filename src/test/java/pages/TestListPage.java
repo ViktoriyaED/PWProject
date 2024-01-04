@@ -30,7 +30,9 @@ public class TestListPage extends BaseLocator {
     }
 
     public TestListPage clickChaptersButton() {
-        chaptersButton.click();
+        if (!chaptersButton.isChecked()) {
+            chaptersButton.click();
+        }
         return this;
     }
 
