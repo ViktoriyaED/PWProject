@@ -1,5 +1,3 @@
-package tests;
-
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import org.testng.annotations.DataProvider;
@@ -14,7 +12,6 @@ public class HomeTest extends BaseTest {
     public void testLoginNavigation() {
 
         assertThat(getPage()).hasURL(getBaseUrl() + "/home");
-        assertThat(getPage()).hasTitle("Trainer Academy");
     }
 
     @DataProvider

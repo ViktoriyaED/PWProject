@@ -9,10 +9,13 @@ target/
 *.iml
 *.ipr
 *.class
+*.xml
 
 config.properties
 debug.log
 *.puml
+testTracing/
+logs/
 
 ### Eclipse ###
 .apt_generated

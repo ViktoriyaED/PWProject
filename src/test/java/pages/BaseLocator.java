@@ -15,6 +15,10 @@ abstract class BaseLocator extends BasePage {
         return getPage().getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(text));
     }
 
+    protected Locator exactButton(String text) {
+        return getPage().getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(text).setExact(true));
+    }
+
     protected Locator link(String text) {
         return getPage().getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(text));
     }
@@ -54,5 +58,11 @@ abstract class BaseLocator extends BasePage {
 
     protected void clickButton(String text) {
         button(text).click();
+    }
+
+    public Locator generateListOfElements(String string) {
+        Locator list = getPage().locator(string);
+        list.last().waitFor();
+        return list;
     }
 }
