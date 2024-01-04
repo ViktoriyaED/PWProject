@@ -21,7 +21,7 @@ public class HomeTest extends BaseTest {
     public Object[][] sideMenuItems() {
         return new Object[][]{
                 {"Home", ProjectProperties.BASE_URL + "/home"},
-                {"Study guide", ProjectProperties.BASE_URL + "/study-guide"},
+                {"Study guide", ProjectProperties.BASE_URL + "/study-guid"},
                 {"Tests", ProjectProperties.BASE_URL + "/test-list"},
                 {"Flashcards", ProjectProperties.BASE_URL + "/flashcard-packs"},
                 {"Mnemonic cards", ProjectProperties.BASE_URL + "/mnemoniccard-list"},
