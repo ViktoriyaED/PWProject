@@ -12,6 +12,7 @@ target/
 *.xml
 
 config.properties
+state.json
 debug.log
 *.puml
 testTracing/
