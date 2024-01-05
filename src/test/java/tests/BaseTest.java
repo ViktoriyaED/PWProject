@@ -19,13 +19,15 @@ public abstract class BaseTest {
     private Browser browser;
     private BrowserContext context;
     private Page page;
-
     public static Logger log = LogManager.getLogger();
+
+    @BeforeSuite
+    protected void beforeSuite() {
+        log.info(ReportUtils.getReportHeader());
+    }
 
     @BeforeClass
     protected void launchBrowser(ITestContext testContext) {
-        log.info(ReportUtils.getReportHeader());
-
         switch (ProjectProperties.BROWSER_NAME) {
             case "chromium" -> this.browser = playwright.chromium().launch(
                     new BrowserType.LaunchOptions().setHeadless(ProjectProperties.IS_HEADLESS).setSlowMo(ProjectProperties.IS_SLOW));
@@ -80,6 +82,10 @@ public abstract class BaseTest {
     protected void closeBrowser() {
         browser.close();
         log.info("BROWSER CLOSED");
+    }
+
+    @AfterSuite
+    protected void closePlaywright() {
         playwright.close();
         log.info("PLAYWRIGHT CLOSED");
     }
