@@ -18,13 +18,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class GmailUtils {
 
     public static final String CREDENTIALS_FILE_PATH = "/credentials.json";
     private static final List<String> SCOPES = List.of(GmailScopes.MAIL_GOOGLE_COM);
-    public static final String APPLICATION_NAME = "Test Mail";
+    public static final String APPLICATION_NAME = "PWProject";
     public static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
     public static final String TOKENS_DIRECTORY_PATH = "tokens";
     private static final String USER_ID = "me";
@@ -51,7 +52,7 @@ public class GmailUtils {
 
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, clientSecret, SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
+                .setDataStoreFactory(new FileDataStoreFactory(Paths.get(TOKENS_DIRECTORY_PATH).toFile()))
                 .setAccessType("offline")
                 .build();
 
