@@ -1,7 +1,7 @@
 package tests;
 
 import org.testng.annotations.Test;
-import utils.GmailReceiving;
+import utils.GmailReceiver;
 import utils.ProjectProperties;
 
 public class GmailTest extends BaseTest {
@@ -14,6 +14,6 @@ public class GmailTest extends BaseTest {
 //        String actualPassword = GmailUtils.extractPasswordFromEmail(GmailUtils.getGmailService(), emailNumber);
 ////        Assert.assertEquals(actualPassword,expectedPassword);
 //        GmailUtils.printLabelsInUserAccount(GmailUtils111.getGmailService());
-        GmailReceiving.getPassword(ProjectProperties.USERNAME_GMAIL, ProjectProperties.PASSWORD_GMAIL, "pw.new.test.23@gmail.com");
+        GmailReceiver.getPassword(ProjectProperties.USERNAME_GMAIL, ProjectProperties.PASSWORD_GMAIL, "pw.new.test.23@gmail.com");
     }
 }

@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 
-public class GmailReceiving {
+public class GmailReceiver {
 
     private static Properties setPropertiesForMail(String email, String password){
         Properties properties = new Properties();
@@ -23,6 +23,7 @@ public class GmailReceiving {
     }
 
     public static void getPassword(String email, String password, String fromEmailFilter) throws MessagingException, IOException {
+        System.out.println(email + " " + password);
         Properties properties = setPropertiesForMail(email, password);
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
