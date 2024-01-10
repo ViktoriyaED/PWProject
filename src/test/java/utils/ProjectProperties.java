@@ -16,7 +16,9 @@ public class ProjectProperties {
     public static final int HEIGHT = Integer.parseInt(properties.getProperty("height"));
     public static final String BASE_URL = properties.getProperty("base_url");
     public static final String USERNAME = properties.getProperty("username").trim();
-    public static final String PASSWORD = properties.getProperty("password").trim();
+    public static final String PASSWORD = properties.getProperty("username").trim();
+    public static final String USERNAME_GMAIL = properties.getProperty("username_gmail").trim();
+    public static final String PASSWORD_GMAIL = properties.getProperty("password_gmail").trim();
 
     private static Properties init_properties() {
         if (properties == null) {
