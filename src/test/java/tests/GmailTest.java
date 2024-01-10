@@ -8,12 +8,10 @@ public class GmailTest extends BaseTest {
 
     @Test
     public void testExtractGmailPassword() throws Exception {
-//        int emailNumber = 1;
-//        String expectedPassword = "nvwy602^~(";
-//
-//        String actualPassword = GmailUtils.extractPasswordFromEmail(GmailUtils.getGmailService(), emailNumber);
-//        Assert.assertEquals(actualPassword,expectedPassword);
+        int emailNumber = 1;
+        String expectedPassword = "nvwy602^~(";
 
-        GmailUtils.printLabelsInUserAccount(GmailUtils.getGmailService());
+        String actualPassword = GmailUtils.extractPasswordFromEmail(GmailUtils.getGmailService(), emailNumber);
+        Assert.assertEquals(actualPassword,expectedPassword);
     }
 }
