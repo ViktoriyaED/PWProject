@@ -56,6 +56,7 @@ public class GmailUtils {
                 HTTP_TRANSPORT, JSON_FACTORY, clientSecret, SCOPES)
                 .setDataStoreFactory(new FileDataStoreFactory(Paths.get(TOKENS_DIRECTORY_PATH).toFile()))
                 .setAccessType("offline")
+                .setApprovalPrompt("auto")
                 .build();
 
         LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
