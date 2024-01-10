@@ -14,6 +14,6 @@ public class GmailTest extends BaseTest {
 //        String actualPassword = GmailUtils.extractPasswordFromEmail(GmailUtils.getGmailService(), emailNumber);
 ////        Assert.assertEquals(actualPassword,expectedPassword);
 //        GmailUtils.printLabelsInUserAccount(GmailUtils111.getGmailService());
-        GmailReceiver.getPassword(ProjectProperties.USERNAME_GMAIL, ProjectProperties.PASSWORD_GMAIL, "pw.new.test.23@gmail.com");
+        GmailReceiver.getPassword("pwtester.new@gmail.com", "kbtb ozhw zkjl nkoi", "pw.new.test.23@gmail.com");
     }
 }
