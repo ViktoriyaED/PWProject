@@ -1,12 +1,9 @@
 package utils;
 
-import com.google.api.client.auth.oauth2.AuthorizationCodeRequestUrl;
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeRequestUrl;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -24,7 +21,6 @@ import java.io.InputStreamReader;
 import java.nio.file.Paths;
 import java.util.*;
 
-import static tests.BaseTest.log;
 
 public class GmailUtils {
 
@@ -37,7 +33,6 @@ public class GmailUtils {
     private static final String COMMON_EMAIL_PART = "mytestrail+";
     private static final String EMAIL_END_PART = "@gmail.com";
     private static final String QUERY = "subject:You have been invited";
-    private static String googleAuthUrl;
 
 
     public static Gmail getGmailService() throws Exception {
@@ -52,7 +47,7 @@ public class GmailUtils {
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         InputStream in = GmailUtils.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
         if (in == null) {
-            throw new FileNotFoundException("Resource not found:" + CREDENTIALS_FILE_PATH);
+            throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
         }
         GoogleClientSecrets clientSecret =
                 GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
@@ -63,65 +58,10 @@ public class GmailUtils {
                 .setAccessType("offline")
                 .build();
 
-//        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8080).build();
-//        Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
+        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setHost("localhost").setPort(8080).build();
+        Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
 
-
-//        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(httpTransport, jsonFactory, secrets, scopes)
-//                .setDataStoreFactory(dataStore).build();
-//
-        Credential credents = flow.loadCredential("user");
-        String redirect_url = null;
-
-        // Checking if the given user is not authorized
-        if (credents == null) {
-            // Creating a local receiver
-            LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8080).build();
-//            LocalServerReceiver receiver = new LocalServerReceiver();
-            try {
-                // Getting the redirect URI
-                String redirectUri = receiver.getRedirectUri();
-
-                // Creating a new authorization URL
-                AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
-
-                // Setting the redirect URI
-                authorizationUrl.setRedirectUri(redirectUri);
-
-                // Building the authorization URL
-                String url = authorizationUrl.build();
-
-                // Logging a short message
-                log.info("Creating the authorization URL : " + url);
-
-                //This url will be fetched right after, as a button callback (target:_blank)
-                //by using :FacesContext.getCurrentInstance().getExternalContext().redirect(googleAuthUrl);
-                googleAuthUrl = url;
-
-
-                // Receiving authorization code
-                String code = receiver.waitForCode();
-
-                // Exchanging it for an access token
-                TokenResponse response = flow.newTokenRequest(code).setRedirectUri(redirectUri).execute();
-
-                // Storing the credentials for later access
-                credents = flow.createAndStoreCredential(response, USER_ID);
-
-
-            } finally {
-                // Releasing resources
-                receiver.stop();
-            }
-        }
-
-        // Setting up the calendar service client
-//        client = new com.google.api.services.calendar.Calendar.Builder(httpTransport, jsonFactory, credents).setApplicationName(APPLICATION_NAME)
-//                .build();
-
-
-//        return credential;
-        return credents;
+        return credential;
     }
 
     public static String extractPasswordFromEmail(Gmail service, int numericPart) throws IOException {
