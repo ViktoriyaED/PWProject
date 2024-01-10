@@ -56,7 +56,7 @@ public class GmailUtils {
                 .setAccessType("offline")
                 .build();
 
-        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
+        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(9999).build();
         Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
 
         return credential;
@@ -83,6 +83,19 @@ public class GmailUtils {
             return passwordValue;
         } else {
             return null;
+        }
+    }
+
+    public static void printLabelsInUserAccount(Gmail service) throws IOException {
+        ListLabelsResponse listResponse = service.users().labels().list(USER_ID).execute();
+        List<Label> labels = listResponse.getLabels();
+        if (labels.isEmpty()) {
+            System.out.println("No labels found.");
+        } else {
+            System.out.println("Labels:");
+            for (Label label : labels) {
+                System.out.printf("- %s\n", label.getName());
+            }
         }
     }
 
