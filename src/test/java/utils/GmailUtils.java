@@ -58,7 +58,7 @@ public class GmailUtils {
                 .setAccessType("offline")
                 .build();
 
-        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8080).build();
+        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
         Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
 
         return credential;
