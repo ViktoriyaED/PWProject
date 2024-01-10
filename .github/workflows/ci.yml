@@ -29,7 +29,7 @@ jobs:
         run: mvn test
         env:
           BROWSER_OPTIONS: browser=chrome;width=1920;height=1080;headless=true;slowMo=0
-          WEB_OPTIONS: username=${{ secrets.USERNAME }};password=${{ secrets.PASSWORD }};base_url=${{ secrets.BASE_URL }};username_gmail={{secrets.USERNAME_GMAIL}};password_GMAIL={{secrets.PASSWORD_GMAIL}}
+          WEB_OPTIONS: username=${{ secrets.USERNAME }};password=${{ secrets.PASSWORD }};base_url=${{ secrets.BASE_URL }};username_gmail={{ secrets.USERNAME_GMAIL }};password_gmail={{ secrets.PASSWORD_GMAIL }}
           CI_RUN: true
 
       - name: Create test report
