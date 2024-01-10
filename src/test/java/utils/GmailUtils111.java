@@ -12,25 +12,28 @@ import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
-import com.google.api.services.gmail.model.*;
+import com.google.api.services.gmail.model.Label;
+import com.google.api.services.gmail.model.ListLabelsResponse;
+import com.google.api.services.gmail.model.ListMessagesResponse;
+import com.google.api.services.gmail.model.Message;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.List;
 
 
-public class GmailUtils {
+public class GmailUtils111 {
 
-    public static final String CREDENTIALS_FILE_PATH = "/credentials.json";
+    private static final String CREDENTIALS_FILE_PATH = "/credentials1.json";
     private static final List<String> SCOPES = List.of(GmailScopes.MAIL_GOOGLE_COM);
-    public static final String APPLICATION_NAME = "PWProject";
-    public static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
-    public static final String TOKENS_DIRECTORY_PATH = "tokens";
+    private static final String APPLICATION_NAME = "PWProject";
+    private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
+    private static final String TOKENS_DIRECTORY_PATH = "tokens1";
     private static final String USER_ID = "me";
-    private static final String COMMON_EMAIL_PART = "mytestrail+";
+    private static final String COMMON_EMAIL_PART = "pwtester.new+";
     private static final String EMAIL_END_PART = "@gmail.com";
     private static final String QUERY = "subject:You have been invited";
 
@@ -45,7 +48,7 @@ public class GmailUtils {
     }
 
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
-        InputStream in = GmailUtils.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
+        InputStream in = GmailUtils111.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
         if (in == null) {
             throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
         }
@@ -56,12 +59,10 @@ public class GmailUtils {
                 HTTP_TRANSPORT, JSON_FACTORY, clientSecret, SCOPES)
                 .setDataStoreFactory(new FileDataStoreFactory(Paths.get(TOKENS_DIRECTORY_PATH).toFile()))
                 .setAccessType("offline")
-                .setApprovalPrompt("auto")
                 .build();
 
         LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
         Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
-        System.out.println("aut");
 
         return credential;
     }
@@ -106,6 +107,6 @@ public class GmailUtils {
     public static void main(String[] args) throws Exception {
         int emailNumber = 1;
 
-        GmailUtils.extractPasswordFromEmail(getGmailService(), emailNumber);
+        GmailUtils111.extractPasswordFromEmail(getGmailService(), emailNumber);
     }
 }
