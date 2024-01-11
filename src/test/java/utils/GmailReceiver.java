@@ -22,8 +22,9 @@ public class GmailReceiver {
         return properties;
     }
 
-    public static void getPassword(String email, String password, String fromEmailFilter) throws MessagingException, IOException {
-        System.out.println(email + " " + password);
+    public static String getPassword(String email, String password, String fromEmailFilter) throws MessagingException, IOException {
+        String passwordValue = null;
+
         Properties properties = setPropertiesForMail(email, password);
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
@@ -79,7 +80,7 @@ public class GmailReceiver {
                     for (int j = 0; j < lines.length; j++) {
                         if (lines[j].contains("Password:")) {
                             // Get the password from the next line
-                            String passwordValue = lines[j + 1].trim();
+                            passwordValue = lines[j + 1].trim();
                             System.out.println(passwordValue);
                             break;  // Exit the loop when the password is found
                         }
@@ -101,6 +102,7 @@ public class GmailReceiver {
                 store.close();
             }
         }
+    return passwordValue;
     }
 }
 
