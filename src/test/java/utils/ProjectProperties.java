@@ -17,6 +17,7 @@ public class ProjectProperties {
     public static final String BASE_URL = properties.getProperty("base_url");
     public static final String USERNAME = properties.getProperty("username").trim();
     public static final String PASSWORD = properties.getProperty("password").trim();
+    public static final String COMMON_EMAIL_PART = properties.getProperty("commonEmailPart").trim();
 
     private static Properties init_properties() {
         if (properties == null) {

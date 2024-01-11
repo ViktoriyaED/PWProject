@@ -17,6 +17,7 @@ debug.log
 *.puml
 testTracing/
 logs/
+tokens/
 
 ### Eclipse ###
 .apt_generated

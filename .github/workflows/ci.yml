@@ -29,7 +29,7 @@ jobs:
         run: mvn test
         env:
           BROWSER_OPTIONS: browser=chrome;width=1920;height=1080;headless=true;slowMo=0
-          WEB_OPTIONS: username=${{ secrets.USERNAME }};password=${{ secrets.PASSWORD }};base_url=${{ secrets.BASE_URL}}
+          WEB_OPTIONS: username=${{ secrets.USERNAME }};password=${{ secrets.PASSWORD }};base_url=${{ secrets.BASE_URL }};commonEmailPart=${{ secrets.COMMON_EMAIL_PART }}
           CI_RUN: true
 
       - name: Create test report
@@ -40,9 +40,10 @@ jobs:
           path: target/surefire-reports/TEST-*.xml
           reporter: java-junit
 
-      - name: Attach test trace
+      - name: Attach artifacts on failure
         uses: actions/upload-artifact@v3
         if: failure()
         with:
-          name: testTracing
+          name: Artifacts
           path: testTracing/
+
