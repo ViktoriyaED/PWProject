@@ -9,27 +9,27 @@ import java.util.Properties;
 
 public class GmailReceiver {
 
-    private static Properties setPropertiesForMail(String email, String password){
+    private static Properties setPropertiesForMail(){
         Properties properties = new Properties();
         properties.put("mail.store.protocol", "imaps");
         properties.put("mail.imap.host", "imap.gmail.com");
         properties.put("mail.debug", "false");
         properties.put("mail.imap.ssl.enable", "true");
         properties.put("mail.imap.port", "993");
-        properties.put("mail.imap.user", email);
-        properties.put("mail.imap.password", password);
+        properties.put("mail.imap.user", ProjectProperties.USERNAME_GMAIL);
+        properties.put("mail.imap.password", ProjectProperties.PASSWORD_GMAIL);
 
         return properties;
     }
 
-    public static String getPassword(String email, String password, String fromEmailFilter) throws MessagingException, IOException {
+    public static String getPassword() throws MessagingException, IOException {
         String passwordValue = null;
 
-        Properties properties = setPropertiesForMail(email, password);
+        Properties properties = setPropertiesForMail();
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(email, password);
+                return new PasswordAuthentication(ProjectProperties.USERNAME_GMAIL, ProjectProperties.PASSWORD_GMAIL);
             }
         });
 
@@ -37,12 +37,12 @@ public class GmailReceiver {
         Folder folder = null;
 
         try {
-            store.connect("imap.gmail.com", email, password);
+            store.connect("imap.gmail.com", ProjectProperties.USERNAME_GMAIL, ProjectProperties.PASSWORD_GMAIL);
 
             folder = store.getFolder("INBOX");
             folder.open(Folder.READ_ONLY);
 
-            Message[] messages = folder.search(new FromTerm(new InternetAddress(fromEmailFilter)));
+            Message[] messages = folder.search(new FromTerm(new InternetAddress("pw.new.test.23@gmail.com")));
 
             if (messages.length > 0) {
                 // Get the latest message
@@ -50,20 +50,20 @@ public class GmailReceiver {
 //                System.out.println("Subject: " + message.getSubject());
                 Object content = message.getContent();
 
-                if (content instanceof Multipart) {
-                    Multipart multipart = (Multipart) content;
+//                if (content instanceof Multipart) {
+//                    Multipart multipart = (Multipart) content;
 
-                    // Iterate through the parts of the Multipart
-                    for (int i = 0; i < multipart.getCount(); i++) {
-                        BodyPart bodyPart = multipart.getBodyPart(i);
-
-                        // Check if the part is text/plain
-                        if (bodyPart.isMimeType("text/plain")) {
-                            String text = (String) bodyPart.getContent();
-//                            System.out.println("Content: " + text);
-                        }
-                    }
-                }
+//                    // Iterate through the parts of the Multipart
+//                    for (int i = 0; i < multipart.getCount(); i++) {
+//                        BodyPart bodyPart = multipart.getBodyPart(i);
+//
+//                        // Check if the part is text/plain
+//                        if (bodyPart.isMimeType("text/plain")) {
+//                            String text = (String) bodyPart.getContent();
+////                            System.out.println("Content: " + text);
+//                        }
+//                    }
+//                }
 //
             // If the content is a multipart message, iterate through its parts
             Multipart multipart = (Multipart) content;
@@ -88,7 +88,7 @@ public class GmailReceiver {
                 }
             }
             } else {
-                System.out.println("No messages from " + fromEmailFilter);
+                System.out.println("No messages from " + "pw.new.test.23@gmail.com");
             }
 
 
