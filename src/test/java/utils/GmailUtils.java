@@ -21,7 +21,6 @@ import java.io.InputStreamReader;
 import java.nio.file.Paths;
 import java.util.*;
 
-
 public class GmailUtils {
 
     public static final String CREDENTIALS_FILE_PATH = "/credentials.json";
@@ -55,12 +54,10 @@ public class GmailUtils {
                 HTTP_TRANSPORT, JSON_FACTORY, clientSecret, SCOPES)
                 .setDataStoreFactory(new FileDataStoreFactory(Paths.get(TOKENS_DIRECTORY_PATH).toFile()))
                 .setAccessType("offline")
-                .setApprovalPrompt("auto")
                 .build();
 
         LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
         Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
-        System.out.println("aut");
 
         return credential;
     }
@@ -87,24 +84,5 @@ public class GmailUtils {
         } else {
             return null;
         }
-    }
-
-    public static void printLabelsInUserAccount(Gmail service) throws IOException {
-        ListLabelsResponse listResponse = service.users().labels().list(USER_ID).execute();
-        List<Label> labels = listResponse.getLabels();
-        if (labels.isEmpty()) {
-            System.out.println("No labels found.");
-        } else {
-            System.out.println("Labels:");
-            for (Label label : labels) {
-                System.out.printf("- %s\n", label.getName());
-            }
-        }
-    }
-
-    public static void main(String[] args) throws Exception {
-        int emailNumber = 1;
-
-        GmailUtils.extractPasswordFromEmail(getGmailService(), emailNumber);
     }
 }

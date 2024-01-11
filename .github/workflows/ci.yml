@@ -45,7 +45,5 @@ jobs:
         if: failure()
         with:
           name: Artifacts
-          path: |
-            testTracing/
-            tokens/
+          path: testTracing/
 
