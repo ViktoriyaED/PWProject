@@ -34,7 +34,6 @@ public class GmailUtils {
     private static final String EMAIL_END_PART = "@gmail.com";
     private static final String QUERY = "subject:You have been invited";
 
-
     public static Gmail getGmailService() throws Exception {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         Gmail service = new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
