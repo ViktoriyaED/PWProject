@@ -63,13 +63,13 @@ public class GmailUtils {
     }
 
     public static String extractPasswordFromEmail(Gmail service, int numericPart) throws IOException {
-        String email = COMMON_EMAIL_PART + numericPart + EMAIL_END_PART;
+        String email = ProjectProperties.COMMON_EMAIL_PART + numericPart + EMAIL_END_PART;
         String combinedQuery = "to:" + email + " " + QUERY;
 
         ListMessagesResponse response = service.users().messages().list(USER_ID).setQ(combinedQuery).execute();
         if (response.getMessages() != null && !response.getMessages().isEmpty()) {
             String messageId = response.getMessages().get(0).getId();
-            Message message = service.users().messages().get("me", messageId).execute();
+            Message message = service.users().messages().get(USER_ID, messageId).execute();
             String body = new String(message.getPayload().getParts().get(0).getBody().decodeData());
 
             String[] lines = body.split("\n");
@@ -77,7 +77,7 @@ public class GmailUtils {
 
             for (int i = 0; i < lines.length; i++) {
                 if (lines[i].contains("Password:")) {
-                    passwordValue = lines[i + 1].trim();
+                    passwordValue = lines[i + 1].trim().replace("&amp;", "&");
                 }
             }
             return passwordValue;
