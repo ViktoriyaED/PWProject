@@ -17,7 +17,11 @@ debug.log
 *.puml
 testTracing/
 logs/
-tokens/
+StoredCredential
+
+# Allure Report
+allure-results/
+.allure/
 
 ### Eclipse ###
 .apt_generated
