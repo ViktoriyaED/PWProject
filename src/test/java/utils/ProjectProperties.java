@@ -1,5 +1,9 @@
 package utils;
 
+import com.microsoft.playwright.Page;
+import io.qameta.allure.Allure;
+
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -54,7 +58,22 @@ public class ProjectProperties {
         return properties;
     }
 
-    static boolean isServerRun() {
+    public static boolean isServerRun() {
         return System.getenv("CI_RUN") != null;
+    }
+
+    static void captureScreenFile(Page page, String methodName, String className) {
+        byte[] screenshotBytes = page.screenshot();
+
+        Allure.getLifecycle().addAttachment(
+                "screenshot", "image/png", "png", screenshotBytes
+        );
+
+        try {
+            File screenshotFile = new File(String.format("screenshots/%s-%s.png", className, methodName));
+            page.screenshot(new Page.ScreenshotOptions().setPath(screenshotFile.toPath()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
