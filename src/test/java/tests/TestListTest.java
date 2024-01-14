@@ -1,15 +1,21 @@
 package tests;
 
+import io.qameta.allure.*;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.TestsPage;
 import utils.ProjectProperties;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static io.qameta.allure.SeverityLevel.CRITICAL;
 
 public class TestListTest extends BaseTest {
 
-    @Test
+    @Test(testName = "TC1344-01 The single non-active Checkbox can be checked.")
+    @Description("Objective: To verify that a non-active checkbox ca be successfully checked.")
+    @Story("Tests")
+    @TmsLink("l3twyfx5esxv")
+    @Owner("ViktoriyaD")
     public void testTutorModeWithRandomCheckboxInDomain() {
         String expectedNumberOfQuestions = "5";
         String testTutorEndPoint = "/test-tutor";
