@@ -1,6 +1,7 @@
 package tests;
 
 import com.microsoft.playwright.*;
+import io.qameta.allure.Allure;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.ITestContext;
@@ -72,6 +73,20 @@ public abstract class BaseTest {
         context.tracing().stop(
                 tracingStopOptions
         );
+
+//        if (!testResult.isSuccess() && !ProjectProperties.isServerRun()) {
+//            Allure.getLifecycle().addAttachment(
+//                    "screenshot", "image/png", "png"
+//                    , ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)
+//            );
+//        }
+
+        if (!testResult.isSuccess() && !ProjectProperties.isServerRun()) {
+            byte[] screenshotBytes = page.screenshot();
+            Allure.getLifecycle().addAttachment(
+                    "screenshot", "image/png", "png", screenshotBytes
+            );
+        }
 
         page.close();
         context.close();
