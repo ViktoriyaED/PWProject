@@ -7,11 +7,10 @@ import pages.TestsPage;
 import utils.ProjectProperties;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static io.qameta.allure.SeverityLevel.CRITICAL;
 
 public class TestListTest extends BaseTest {
 
-    @Test(testName = "TC1344-01 The single non-active Checkbox can be checked.")
+    @Test(description = "TC1344-01 The single non-active Checkbox can be checked.")
     @Description("Objective: To verify that a non-active checkbox ca be successfully checked.")
     @Story("Tests")
     @TmsLink("l3twyfx5esxv")

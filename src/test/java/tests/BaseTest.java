@@ -11,7 +11,9 @@ import utils.ExceptionListener;
 import utils.ProjectProperties;
 import utils.ReportUtils;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 
 @Listeners(ExceptionListener.class)
@@ -45,7 +47,12 @@ public abstract class BaseTest {
     @BeforeMethod
     protected void createContextAndPage(Method method) {
         log.info("RUN " + this.getClass().getName() + "." + method.getName());
-        context = browser.newContext(new Browser.NewContextOptions().setViewportSize(ProjectProperties.WIDTH, ProjectProperties.HEIGHT));
+        context = browser.newContext(new Browser.NewContextOptions()
+                .setViewportSize(ProjectProperties.WIDTH, ProjectProperties.HEIGHT)
+                .setRecordVideoDir(Paths.get("videos/"))
+                .setRecordVideoSize(1280, 720)
+        );
+
         context.tracing().start(
                 new Tracing.StartOptions()
                         .setScreenshots(true)
@@ -61,34 +68,46 @@ public abstract class BaseTest {
     }
 
     @AfterMethod
-    protected void closeContext(Method method, ITestResult testResult) {
+    protected void closeContext(Method method, ITestResult testResult) throws IOException {
         log.info(ReportUtils.getTestStatistics(method, testResult));
         Tracing.StopOptions tracingStopOptions = null;
         String classMethodName = this.getClass().getName() + method.getName();
+
         if (!testResult.isSuccess()) {
-            tracingStopOptions = new Tracing.StopOptions()
-                    .setPath(Paths.get("testTracing/" + classMethodName + ".zip"));
-            log.info("TRACING SAVED");
-        }
-        context.tracing().stop(
-                tracingStopOptions
-        );
-
-//        if (!testResult.isSuccess() && !ProjectProperties.isServerRun()) {
-//            Allure.getLifecycle().addAttachment(
-//                    "screenshot", "image/png", "png"
-//                    , ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)
-//            );
-//        }
-
-        if (!testResult.isSuccess() && !ProjectProperties.isServerRun()) {
-            byte[] screenshotBytes = page.screenshot();
-            Allure.getLifecycle().addAttachment(
-                    "screenshot", "image/png", "png", screenshotBytes
+            Allure.getLifecycle().addAttachment("screenshot", "image/png", "png",
+                    page.screenshot(new Page.ScreenshotOptions()
+                            .setFullPage(true))
             );
         }
 
         page.close();
+
+        if (!testResult.isSuccess()) {
+            tracingStopOptions = new Tracing.StopOptions()
+                    .setPath(Paths.get("testTracing/" + classMethodName + ".zip"));
+            log.info("Tracing saved");
+
+            page.video().saveAs(Paths.get("videos/" + classMethodName + ".webm"));
+            log.info("Video saved");
+            page.video().delete();
+        } else {
+            page.video().delete();
+        }
+
+        if (!testResult.isSuccess()) {
+            Allure.getLifecycle().addAttachment("video", "videos/webm", "webm",
+                    Files.readAllBytes(Paths.get("videos/" + classMethodName + ".webm")));
+            log.info("Video added to Allure report");
+
+            Allure.getLifecycle().addAttachment("tracing", "archive/zip", "webm",
+                    Files.readAllBytes(Paths.get("testTracing/" + classMethodName + ".zip")));
+            log.info("Tracing added to Allure report");
+        }
+
+        context.tracing().stop(
+                tracingStopOptions
+        );
+
         context.close();
         log.info("CONTEXT AND PAGE CLOSED" + ReportUtils.END_LINE);
     }
